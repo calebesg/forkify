@@ -29,7 +29,7 @@ const renderSpinner = function (parentEl) {
   parentEl.insertAdjacentHTML('afterbegin', markup);
 };
 
-const renderRecipe = function (recipe) {
+const renderRecipe = function (recipe, parentEl) {
   const html = `
     <figure class="recipe__fig">
       <img src="${recipe.image}" alt="${recipe.title}" class="recipe__img" />
@@ -123,16 +123,20 @@ const renderRecipe = function (recipe) {
     </div>
   `;
 
-  recipeContainer.innerHTML = '';
-  recipeContainer.insertAdjacentHTML('afterbegin', html);
+  parentEl.innerHTML = '';
+  parentEl.insertAdjacentHTML('afterbegin', html);
 };
 
-const getRecipe = async function () {
+const getRecipe = async function (parentEl) {
   try {
-    renderSpinner(recipeContainer);
+    const id = window.location.hash.slice(1);
+
+    if (!id) return;
+
+    renderSpinner(parentEl);
 
     const response = await fetch(
-      'https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886'
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
     );
 
     const data = await response.json();
@@ -155,10 +159,12 @@ const getRecipe = async function () {
 
     console.log(recipe);
 
-    renderRecipe(recipe);
+    renderRecipe(recipe, parentEl);
   } catch (error) {
     console.error(error.message);
   }
 };
 
-getRecipe();
+['hashchange', 'load'].forEach(event =>
+  window.addEventListener(event, getRecipe.bind(null, recipeContainer))
+);
