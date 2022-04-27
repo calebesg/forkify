@@ -1,0 +1,24 @@
+{
+  "name": "forkify",
+  "version": "1.0.0",
+  "description": "Recipe application",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/calebesg/forkify.git"
+  },
+  "author": "Calebe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/calebesg/forkify/issues"
+  },
+  "homepage": "https://github.com/calebesg/forkify#readme",
+  "devDependencies": {
+    "@parcel/transformer-sass": "^2.5.0",
+    "parcel": "^2.5.0"
+  }
+}
