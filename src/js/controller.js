@@ -3,6 +3,12 @@ import 'regenerator-runtime/runtime';
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+import resultView from './views/resultView.js';
+
+// PARCEL -> SAVE STATE
+if (module.hot) {
+  module.hot.accept();
+}
 
 const controlRecipes = async function () {
   try {
@@ -19,14 +25,16 @@ const controlRecipes = async function () {
   }
 };
 
-const controlSearchRecipe = async function () {
+const controlSearchResult = async function () {
   try {
     const query = searchView.getQuery();
     if (!query) return;
 
+    resultView.renderSpinner();
+
     await model.loadSearchRecipe(query);
 
-    console.log(model.state.search.result);
+    resultView.render(model.state.search.result);
   } catch (error) {
     console.error(error);
   }
@@ -34,6 +42,6 @@ const controlSearchRecipe = async function () {
 
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
-  searchView.addHandlerSearchRecipe(controlSearchRecipe);
+  searchView.addHandlerSearch(controlSearchResult);
 };
 init();
