@@ -6,9 +6,9 @@ import searchView from './views/searchView.js';
 import resultView from './views/resultView.js';
 
 // PARCEL -> SAVE STATE
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 const controlRecipes = async function () {
   try {
@@ -34,7 +34,7 @@ const controlSearchResult = async function () {
 
     await model.loadSearchRecipe(query);
 
-    resultView.render(model.state.search.result);
+    resultView.render(model.getResultPerPage(3));
   } catch (error) {
     console.error(error);
   }
