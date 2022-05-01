@@ -22,7 +22,6 @@ const controlRecipes = async function () {
     await model.loadRecipe(id);
 
     recipeView.render(model.state.recipe);
-    console.log(model.state.recipe);
   } catch (error) {
     recipeView.renderError();
   }
@@ -53,9 +52,19 @@ const controlServings = function (newServing) {
   recipeView.update(model.state.recipe);
 };
 
+const controlBookmarker = function () {
+  const isSaved = model.state.recipe.bookmarked;
+
+  if (isSaved) model.removeBookmarker(model.state.recipe.id);
+  else model.addBookmarker(model.state.recipe);
+
+  recipeView.update(model.state.recipe);
+};
+
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServing(controlServings);
+  recipeView.addHandlerBookmarker(controlBookmarker);
   searchView.addHandlerSearch(controlSearchResult);
   paginationView.addHandlerClick(controlPagination);
 };
