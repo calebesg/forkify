@@ -5,11 +5,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultView from './views/resultView.js';
 import paginationView from './views/paginationView.js';
-
-// PARCEL -> SAVE STATE
-// if (module.hot) {
-//   module.hot.accept();
-// }
+import bookmarksView from './views/bookmarksView.js';
 
 const controlRecipes = async function () {
   try {
@@ -18,6 +14,7 @@ const controlRecipes = async function () {
 
     recipeView.renderSpinner();
     resultView.update(model.getResultPerPage());
+    bookmarksView.update(model.state.bookmarks);
 
     await model.loadRecipe(id);
 
@@ -59,6 +56,7 @@ const controlBookmarker = function () {
   else model.addBookmarker(model.state.recipe);
 
   recipeView.update(model.state.recipe);
+  bookmarksView.render(model.state.bookmarks);
 };
 
 const init = function () {
