@@ -103,7 +103,7 @@ class RecipeView extends View {
         <h2 class="heading--2">Recipe ingredients</h2>
         <ul class="recipe__ingredient-list">
           ${this._data.ingredients.reduce(
-            (str, curr) => (str += this._generateMarkupIngridient(curr)),
+            (str, curr) => (str += this._generateMarkupIngredient(curr)),
             ''
           )}
         </ul>
@@ -118,7 +118,7 @@ class RecipeView extends View {
         </p>
         <a
           class="btn--small recipe__btn"
-          href="${this._data.souceUrl}"
+          href="${this._data.sourceUrl}"
           target="_blank"
         >
           <span>Directions</span>
@@ -130,7 +130,7 @@ class RecipeView extends View {
     `;
   }
 
-  _generateMarkupIngridient(ing) {
+  _generateMarkupIngredient(ing) {
     return `
       <li class="recipe__ingredient">
         <svg class="recipe__icon">
