@@ -22,6 +22,7 @@ const createRecipeObject = function (data) {
     ingredients: data.recipe.ingredients,
     image: data.recipe.image_url,
     sourceUrl: data.recipe.source_url,
+    ...(data.recipe.key && { key: data.recipe.key }),
   };
 };
 
@@ -43,7 +44,7 @@ export const loadSearchRecipe = async function (query) {
   try {
     state.search.query = query;
 
-    const data = await AJAX(`${API_URL}?search=${query}`);
+    const data = await AJAX(`${API_URL}?search=${query}&key=${KEY}`);
 
     state.search.result = data.recipes.map(rec => {
       return {
@@ -51,6 +52,7 @@ export const loadSearchRecipe = async function (query) {
         title: rec.title,
         publisher: rec.publisher,
         image: rec.image_url,
+        ...(rec.key && { key: rec.key }),
       };
     });
 
@@ -148,6 +150,8 @@ export const uploadRecipe = async function (newRecipe) {
     };
 
     const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
+
+    console.log(data);
 
     state.recipe = createRecipeObject(data);
     addBookmarker(state.recipe);
